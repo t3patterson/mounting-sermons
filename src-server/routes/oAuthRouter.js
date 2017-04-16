@@ -1,5 +1,4 @@
 let Router = require('express').Router;
-const secrets = require('../../secrets.js')
 const {configYoutubeClient, initTokenManager} = require('../services/youtube-oauth-client.js');
 const google = require('googleapis');
 const OAuth2Client = google.auth.OAuth2;
@@ -8,10 +7,26 @@ const OAuth2Client = google.auth.OAuth2;
  * NOTE: the model for the data-table should not have the name 'SomeModel'
  */
 
+let youtube_clientId
+let youtube_clientSecret
+let youtube_clientRedirect
+
+
+if(process.env.NODE_ENV === 'production'){
+	youtube_clientId = process.env['YOUTUBE_OAUTH__CLIENT_ID']
+	youtube_clientSecret = process.env['YOUTUBE_OAUTH__CLIENT_SECRET']
+	youtube_clientRedirect = process.env['YOUTUBE_OAUTH__CLIENT_REDIRECT']
+} else {
+	const secrets = require('../../secrets.js') 
+	youtube_clientId = secrets.youTubeOAuth.clientID,
+	youtube_clientSecret = secrets.youTubeOAuth.clientSecret,
+	youtube_clientRedirect = secrets.youTubeOAuth.clientRedirect
+}
+
 const oAuth2Client = new OAuth2Client(
-	secrets.youTubeOAuth.clientID,
-	secrets.youTubeOAuth.clientSecret,
-	secrets.youTubeOAuth.clientRedirect
+	youtube_clientId,
+	youtube_clientSecret,
+	youtube_clientRedirect
 )
 
 const oAuthRouter = Router()

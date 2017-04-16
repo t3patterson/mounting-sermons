@@ -4,14 +4,16 @@
   "description": "starter kit for webpack-es6",
   "main": "app.js",
   "scripts": {
-    "start": "node --use_strict server.js",
+    "start": "NODE_ENV=production node --use_strict server.js",
     "go": "npm-run-all --parallel dev-server webpack-watcher",
     "dev-server": "NODE_ENV=development nodemon server.js --ignore node_modules/ --ignore src-client/ --ignore dist",
     "webpack-watcher": "webpack --progress --watch --config webpack.config.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "set-project-name": "node ./src-server/cli/setProjectName.js",
     "build-dist": "webpack",
-    "gen-seed-data": "NODE_ENV=development node ./src-server/db/seed.js"
+    "gen-seed-data": "NODE_ENV=development node ./src-server/db/seed.js",
+    "gen-seed-data-prod": "NODE_ENV=production node ./src-server/db/seed.js"
+
   },
   "author": "",
   "license": "ISC",

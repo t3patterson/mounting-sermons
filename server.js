@@ -39,7 +39,7 @@ app.use(bodyParser.json())
 //configure sessions w/ passport
 app.use(cookieParser())
 app.use(session({
-	secret: require('./secrets.js').sessionSecret,
+	secret: process.env.NODE_ENV === 'production' ? process.env['SESSION_SECRET'] : require('./secrets.js').sessionSecret,
 	resave: true,
 	saveUninitialized: true
 }))
